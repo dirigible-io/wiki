@@ -59,18 +59,20 @@
 						ng-model="selectedEntry.content_id" readonly>
 					<br> 
 					<label>content_discription</label>
-					<input type="text" class="form-control"
-						ng-model="selectedEntry.content_discription" readonly>
-					<br> 
+                    <textarea rows="7" cols="50" class="form-control"
+    					ng-model="selectedEntry.content_discription" readonly>
+
+                    </textarea>
 				</div>
 				<div ng-show="operation == 'new'">
 					<label>content_id</label> 
 					<input type="text"
 						class="form-control" value="Auto Generated" readonly> <br>
 					<label>content_discription</label> 
-					<input type="text" class="form-control" 
-						ng-model="newEntry.content_discription">
-					<br>
+                    <textarea rows="7" cols="50" class="form-control" 
+    					ng-model="newEntry.content_discription">
+
+                    </textarea>
 				</div>
 				<div ng-show="operation == 'update'">
 					<label>content_id</label>
@@ -78,9 +80,10 @@
 						ng-model="selectedEntry.content_id" readonly>
 					<br> 
 					<label>content_discription</label> 
-					<input type="text" class="form-control"
-						ng-model="selectedEntry.content_discription"> 
-					<br>
+				<textarea rows="7" cols="50" class="form-control"
+        				ng-model="selectedEntry.content_discription">
+
+                    </textarea>
 				</div>
 				<div class="btn-group">
 					<input class="btn btn-primary" type="button" value="Save" ng-show="operation == 'new' || operation == 'update'"

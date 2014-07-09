@@ -52,8 +52,9 @@ exports.readContent_tableEntity = function(id) {
         if(result.length === 0){
             entityLib.printError(javax.servlet.http.HttpServletResponse.SC_NOT_FOUND, 1, "Record with id: " + id + " does not exist.");
         }
-        var text = JSON.stringify(result, null, 2);
-        response.getWriter().println(text);
+        return result;
+        // var text = JSON.stringify(result, null, 2);
+        // response.getWriter().println(text);
     } catch(e){
         var errorCode = javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
         entityLib.printError(errorCode, errorCode, e.message);
@@ -61,6 +62,14 @@ exports.readContent_tableEntity = function(id) {
         connection.close();
     }
 };
+
+exports.readContent_tableEntity_as_HTML = function(id) {
+    var result = exports.readContent_tableEntity(id);
+    result.content_discription = wiki.toHtml(result.content_discription);
+    
+    response.setContentType("text/html");
+    response.getWriter().println(result.content_discription);
+}
 
 // read all entities and print them as JSON array to response
 exports.readContent_tableList = function(limit, offset, sort, desc) {
@@ -87,6 +96,7 @@ exports.readContent_tableList = function(limit, offset, sort, desc) {
         while (resultSet.next()) {
             result.push(createEntity(resultSet));
         }
+        // return result;
         var text = JSON.stringify(result, null, 2);
         response.getWriter().println(text);
     } catch(e){
@@ -96,6 +106,15 @@ exports.readContent_tableList = function(limit, offset, sort, desc) {
         connection.close();
     }
 };
+
+// exports.readContent_tableList_as_HTML = function(limit, offset, sort, desc) {
+//     var result = exports.readContent_tableList(limit, offset, sort, desc);
+//     for(i = 0;i<result.length;i++){
+//         result[i].content_discription = wiki.toHtml(result[i].content_discription);
+//     }
+//     var text = JSON.stringify(result, null, 2);
+//     response.getWriter().println(text);
+// };
 
 //create entity as JSON object from ResultSet current Row
 function createEntity(resultSet, data) {
@@ -241,7 +260,7 @@ exports.processContent_table = function() {
 		} else if ((method === 'GET')) {
 			// read
 			if (id) {
-				exports.readContent_tableEntity(id);
+				exports.readContent_tableEntity_as_HTML(id);
 			} else if (count !== null) {
 				exports.countContent_table();
 			} else if (metadata !== null) {
