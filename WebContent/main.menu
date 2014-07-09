@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Welcome",
+        "link": "index.html",
+        "subMenu": []
+    },
+    {
+        "name": "Wiki",
+        "link": "wiki.html",
+        "subMenu": []
+    }
+]

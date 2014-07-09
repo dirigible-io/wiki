@@ -1,0 +1,23 @@
+{
+  "tableName":"CONTENT_TABLE",
+  "columns":
+    [
+      {
+        "name":"CONTENT_ID",
+        "type":"INTEGER",
+        "length":"0",
+        "notNull":"true",
+        "primaryKey":"true",
+        "defaultValue":""
+      }
+      ,
+      {
+        "name":"CONTENT_DISCRIPTION",
+        "type":"VARCHAR",
+        "length":"2000",
+        "notNull":"true",
+        "primaryKey":"false",
+        "defaultValue":""
+      }
+    ]
+}
