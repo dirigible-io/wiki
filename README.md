@@ -1,4 +1,0 @@
-wiki
-====
-
-Wiki Sample
