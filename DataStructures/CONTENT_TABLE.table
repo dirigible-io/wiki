@@ -19,5 +19,23 @@
         "primaryKey":"false",
         "defaultValue":""
       }
+      ,
+      {
+        "name":"CONTENT_AUTHOR",
+        "type":"VARCHAR",
+        "length":"50",
+        "notNull":"false",
+        "primaryKey":"false",
+        "defaultValue":""
+      }
+      ,
+      {
+        "name":"CONTENT_TITLE",
+        "type":"VARCHAR",
+        "length":"50",
+        "notNull":"false",
+        "primaryKey":"false",
+        "defaultValue":""
+      }
     ]
 }

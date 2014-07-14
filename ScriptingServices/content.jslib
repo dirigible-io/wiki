@@ -12,7 +12,15 @@ exports.createContent_table = function() {
         sql += "CONTENT_ID";
         sql += ",";
         sql += "CONTENT_DISCRIPTION";
+        sql += ",";
+        sql += "CONTENT_AUTHOR";
+        sql += ",";
+        sql += "CONTENT_TITLE";
         sql += ") VALUES ("; 
+        sql += "?";
+        sql += ",";
+        sql += "?";
+        sql += ",";
         sql += "?";
         sql += ",";
         sql += "?";
@@ -23,6 +31,8 @@ exports.createContent_table = function() {
         var id = db.getNext('CONTENT_TABLE_CONTENT_ID');
         statement.setInt(++i, id);
         statement.setString(++i, message.content_discription);
+        statement.setString(++i, message.content_author);
+        statement.setString(++i, message.content_title);
         statement.executeUpdate();
         response.getWriter().println(id);
         return id;
@@ -53,8 +63,8 @@ exports.readContent_tableEntity = function(id) {
             entityLib.printError(javax.servlet.http.HttpServletResponse.SC_NOT_FOUND, 1, "Record with id: " + id + " does not exist.");
         }
         return result;
-        // var text = JSON.stringify(result, null, 2);
-        // response.getWriter().println(text);
+        //var text = JSON.stringify(result, null, 2);
+        //response.getWriter().println(text);
     } catch(e){
         var errorCode = javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
         entityLib.printError(errorCode, errorCode, e.message);
@@ -65,8 +75,9 @@ exports.readContent_tableEntity = function(id) {
 
 exports.readContent_tableEntity_as_HTML = function(id) {
     var result = exports.readContent_tableEntity(id);
-    result.content_discription = wiki.toHtml(result.content_discription);
+    result.content_discription = wiki.toHtml(result.content_discription); 
     
+    response.setCharacterEncoding("UTF-8");
     response.setContentType("text/html");
     response.getWriter().println(result.content_discription);
 }
@@ -96,8 +107,8 @@ exports.readContent_tableList = function(limit, offset, sort, desc) {
         while (resultSet.next()) {
             result.push(createEntity(resultSet));
         }
-        // return result;
         var text = JSON.stringify(result, null, 2);
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().println(text);
     } catch(e){
         var errorCode = javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
@@ -119,8 +130,10 @@ exports.readContent_tableList = function(limit, offset, sort, desc) {
 //create entity as JSON object from ResultSet current Row
 function createEntity(resultSet, data) {
     var result = {};
-	result.content_id = resultSet.getInt("CONTENT_ID");
+    result.content_id = resultSet.getInt("CONTENT_ID");
     result.content_discription = resultSet.getString("CONTENT_DISCRIPTION");
+    result.content_author = resultSet.getString("CONTENT_AUTHOR");
+    result.content_title = resultSet.getString("CONTENT_TITLE");
     return result;
 };
 
@@ -132,10 +145,16 @@ exports.updateContent_table = function() {
     try {
         var sql = "UPDATE CONTENT_TABLE SET ";
         sql += "CONTENT_DISCRIPTION = ?";
+        sql += ",";
+        sql += "CONTENT_AUTHOR = ?";
+        sql += ",";
+        sql += "CONTENT_TITLE = ?";
         sql += " WHERE CONTENT_ID = ?";
         var statement = connection.prepareStatement(sql);
         var i = 0;
         statement.setString(++i, message.content_discription);
+        statement.setString(++i, message.content_author);
+        statement.setString(++i, message.content_title);
         var id = "";
         id = message.content_id;
         statement.setInt(++i, id);
@@ -202,6 +221,16 @@ exports.metadataContent_table = function() {
     propertycontent_discription.type = 'string';
     entityMetadata.properties.push(propertycontent_discription);
 
+	var propertycontent_author = {};
+	propertycontent_author.name = 'content_author';
+    propertycontent_author.type = 'string';
+    entityMetadata.properties.push(propertycontent_author);
+
+	var propertycontent_title = {};
+	propertycontent_title.name = 'content_title';
+    propertycontent_title.type = 'string';
+    entityMetadata.properties.push(propertycontent_title);
+
 
     response.getWriter().println(JSON.stringify(entityMetadata));
 };
@@ -260,7 +289,7 @@ exports.processContent_table = function() {
 		} else if ((method === 'GET')) {
 			// read
 			if (id) {
-				exports.readContent_tableEntity_as_HTML(id);
+			    exports.readContent_tableEntity_as_HTML(id);
 			} else if (count !== null) {
 				exports.countContent_table();
 			} else if (metadata !== null) {

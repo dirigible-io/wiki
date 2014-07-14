@@ -18,49 +18,38 @@
 			<table class="table table-condensed table-striped table-hover">
 				<thead>
 					<tr>
-						<th>content_id</th> 
-						<th>content_discription</th> 
+						<th>Your Content</th> 
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="entry in data" ng-click="showInfoForEntry(entry)">
- 						<td>{{entry.content_id}}</td> 
- 						<td>{{entry.content_discription}}</td> 
+ 						<td>{{entry.content_title}}</td> 
 					</tr>
 				</tbody>
 			</table>
 			<table class="table table-bordered" ng-show="showEntry">
-				<thead>
-					<tr>
-						<th>Attribute</th>
-						<th>Value</th>
-					</tr>
-				</thead>
-				<tbody ng-model="selectedEntry">
-					<tr>
-						<td width="50%">content_id</td>
-						<td width="50%">{{selectedEntry.content_id}}</td>
-					<tr>
-						<td width="50%">content_discription</td>
-						<td width="50%">{{selectedEntry.content_discription}}</td>
-					</tr>
-				</tbody>
+				<div ng-model="selectedEntry" class="well">
+                    <div id="myDiv"></div>
+				</div>
+                <div>
+                    <td>Author: {{selectedEntry.content_author}}</td> 
+				</div>
 			</table>
 		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular-resource.min.js"></script>
-
+    
 	<script type="text/javascript">
 		function ListAndDetailsController($scope, $http) {
 			
 			var url = '/dirigible/js/wiki_sample/content.js';
-
+            
 			$http.get(url)
-			.success(function(data) {
-				$scope.data = data;
-			});
+			    .success(function(data) {
+				    $scope.data = data;
+		    	});
 
 			$scope.showEntry = false;
 			$scope.selectedEntry;
@@ -71,7 +60,11 @@
 					$scope.selectedEntry = null;
 				} else {
 					$scope.showEntry = true;
-					$scope.selectedEntry = entry;
+				    $scope.selectedEntry = entry;
+                    var urlContent = '/dirigible/js/wiki_sample/content.js?content_id=' + entry.content_id;
+                    $.get(urlContent , function (data) {
+                         $("#myDiv").html(data);
+                     });
 				}
 			}
 		}

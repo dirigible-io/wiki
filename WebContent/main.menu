@@ -1,12 +1,13 @@
 [
     {
-        "name": "Welcome",
-        "link": "index.html",
+        "name" : "Create Wiki",
+        "link" : "wiki_content.html",
         "subMenu": []
-    },
+    }
+    ,
     {
-        "name": "Wiki",
-        "link": "wiki.html",
-        "subMenu": []
+    "name" : "Existing Wiki's",
+    "link" : "wiki_content_view.html",
+    "subMenu": []
     }
 ]

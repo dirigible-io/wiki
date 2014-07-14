@@ -7,10 +7,10 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Wiki content</title>
+<title>Wiki Content</title>
 
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <style>
 .selected-true {
 	background-color: #428bca;
@@ -26,22 +26,24 @@
 			<table class="table table-condensed">
 				<thead>
 					<tr>
-						<th>content_id</th>
 						<th>content_discription</th>
+						<th>content_author</th>
+						<th>content_title</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="selected-{{entry._selected_}}" ng-repeat="entry in data"
 						ng-click="showInfoForEntry(entry)">
-						<td>{{entry.content_id}}</td> 
 						<td>{{entry.content_discription}}</td> 
+						<td>{{entry.content_author}}</td> 
+						<td>{{entry.content_title}}</td> 
 					</tr>
 				</tbody>
 			</table>
 			<hr>
 			<br>
 			<div class="btn-group">
-				<input class="btn btn-primary" type="button" value="New"
+				<input class="btn btn-default" type="button" value="New"
 					ng-click="setOperation('new')"
 					ng-disabled="errorMessage || operation == 'update'"> <input
 					class="btn btn-default" type="button" value="Edit"
@@ -54,36 +56,49 @@
 			<br> <br>
 			<div>
 				<div ng-show="operation == 'show'">
-					<label>content_id</label>
-					<input type="text" class="form-control"
-						ng-model="selectedEntry.content_id" readonly>
+                    <label>Content Title</label>
+    				<input type="text" class="form-control"
+						ng-model="selectedEntry.content_title" readonly>
 					<br> 
-					<label>content_discription</label>
+					<label>Your Content</label>
                     <textarea rows="7" cols="50" class="form-control"
-    					ng-model="selectedEntry.content_discription" readonly>
+        				ng-model="selectedEntry.content_discription" readonly>
 
                     </textarea>
+					<label>Content Author</label>
+					<input type="text" class="form-control"
+						ng-model="selectedEntry.content_author" readonly>
+					<br> 
 				</div>
 				<div ng-show="operation == 'new'">
-					<label>content_id</label> 
-					<input type="text"
-						class="form-control" value="Auto Generated" readonly> <br>
-					<label>content_discription</label> 
-                    <textarea rows="7" cols="50" class="form-control" 
-    					ng-model="newEntry.content_discription">
+                    <label>Content Title</label> 
+    				<input type="text" class="form-control" 
+						ng-model="newEntry.content_title">
+					<br>
+					<label>Your Content</label> 
+				    <textarea rows="7" cols="50" class="form-control"
+        				ng-model="newEntry.content_discription" >
 
                     </textarea>
+					<label>Content Author</label> 
+					<input type="text" class="form-control"
+    					ng-model="newEntry.content_author"> 
+					<br>
 				</div>
 				<div ng-show="operation == 'update'">
-					<label>content_id</label>
-					<input type="text" class="form-control" 
-						ng-model="selectedEntry.content_id" readonly>
-					<br> 
-					<label>content_discription</label> 
-				<textarea rows="7" cols="50" class="form-control"
-        				ng-model="selectedEntry.content_discription">
+                    <label>Content Title</label> 
+    				<input type="text" class="form-control"
+						ng-model="selectedEntry.content_title"> 
+					<br>
+					<label>Your Content</label> 
+					<textarea rows="7" cols="50" class="form-control"
+        				ng-model="selectedEntry.content_discription" >
 
                     </textarea>
+					<label>Content Author</label> 
+					<input type="text" class="form-control"
+						ng-model="selectedEntry.content_author"> 
+					<br>
 				</div>
 				<div class="btn-group">
 					<input class="btn btn-primary" type="button" value="Save" ng-show="operation == 'new' || operation == 'update'"
